@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: kafka-tutorial
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: mi-grupo-educativo
+      # Solo aplica si el grupo NO tiene offsets guardados: lee desde el inicio
+      auto-offset-reset: earliest
+      # Guarda (commit) automaticamente el ultimo offset leido
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # OPCIONAL: descomenta para forzar un reparto 0, 1, 2 en los mensajes SIN key.
+      # Por defecto Kafka usa "sticky partitioner" y puede mandar varios seguidos a la misma particion.
+      # properties:
+      #   partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
+
+server:
+  port: 8888   # 8080 lo usa Kafka UI
+
+logging:
+  level:
+    root: INFO
+    org.springframework.kafka: DEBUG
